@@ -20,6 +20,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .plot.plantedA {
@@ -28,4 +29,15 @@ body {
 
 .plot.plantedB {
     background-image: url('images/growing_icon.png');
+}
+
+.timer {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
 }

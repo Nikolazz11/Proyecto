@@ -12,6 +12,35 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let seedsB = 5;
     let plotCount = 3;
 
+    const updateTimer = (plot, remainingTime) => {
+        let timer = plot.querySelector('.timer');
+        if (!timer) {
+            timer = document.createElement('div');
+            timer.classList.add('timer');
+            plot.appendChild(timer);
+        }
+        timer.textContent = `${remainingTime}s`;
+    };
+
+    const startGrowthTimer = (plot, growthTime) => {
+        let remainingTime = growthTime / 1000; // Convertir a segundos
+        updateTimer(plot, remainingTime);
+
+        const interval = setInterval(() => {
+            remainingTime--;
+            updateTimer(plot, remainingTime);
+
+            if (remainingTime <= 0) {
+                clearInterval(interval);
+                plot.dataset.grown = 'true';
+                const timer = plot.querySelector('.timer');
+                if (timer) {
+                    plot.removeChild(timer);
+                }
+            }
+        }, 1000);
+    };
+
     buySeedAButton.addEventListener('click', () => {
         if (money >= 5) {
             money -= 5;
@@ -63,20 +92,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     seedsADisplay.textContent = seedsA;
 
                     // Simular crecimiento de la planta A después de 5 segundos
-                    setTimeout(() => {
-                        plot.dataset.grown = 'true'; // Marcar la parcela como crecida
-                        plot.dataset.type = 'A';
-                    }, 5000); // 5000 milisegundos = 5 segundos
+                    startGrowthTimer(plot, 5000);
                 } else if (plantOption === 'B' && seedsB > 0) {
                     plot.classList.add('plantedB');
                     seedsB--;
                     seedsBDisplay.textContent = seedsB;
 
                     // Simular crecimiento de la planta B después de 10 segundos
-                    setTimeout(() => {
-                        plot.dataset.grown = 'true'; // Marcar la parcela como crecida
-                        plot.dataset.type = 'B';
-                    }, 10000); // 10000 milisegundos = 10 segundos
+                    startGrowthTimer(plot, 10000);
                 } else {
                     alert('No tienes suficientes semillas para plantar este tipo.');
                 }
