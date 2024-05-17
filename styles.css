@@ -1,0 +1,27 @@
+body {
+    background-image: url('images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.plot {
+    width: 96px;
+    height: 96px;
+    border: 2px solid #000;
+    margin: 8px;
+    background-image: url('images/plot.png');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.plot.planted {
+    background-image: url('images/planted_plot.png');
+}
