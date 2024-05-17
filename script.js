@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         timer.textContent = `${remainingTime}s`;
     };
 
-    const startGrowthTimer = (plot, growthTime) => {
+    const startGrowthTimer = (plot, growthTime, plantType) => {
         let remainingTime = growthTime / 1000; // Convertir a segundos
         updateTimer(plot, remainingTime);
 
@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             if (remainingTime <= 0) {
                 clearInterval(interval);
                 plot.dataset.grown = 'true';
+                plot.dataset.type = plantType;
                 const timer = plot.querySelector('.timer');
                 if (timer) {
                     plot.removeChild(timer);
@@ -92,14 +93,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     seedsADisplay.textContent = seedsA;
 
                     // Simular crecimiento de la planta A después de 5 segundos
-                    startGrowthTimer(plot, 5000);
+                    startGrowthTimer(plot, 5000, 'A');
                 } else if (plantOption === 'B' && seedsB > 0) {
                     plot.classList.add('plantedB');
                     seedsB--;
                     seedsBDisplay.textContent = seedsB;
 
                     // Simular crecimiento de la planta B después de 10 segundos
-                    startGrowthTimer(plot, 10000);
+                    startGrowthTimer(plot, 10000, 'B');
                 } else {
                     alert('No tienes suficientes semillas para plantar este tipo.');
                 }
