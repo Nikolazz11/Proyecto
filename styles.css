@@ -22,6 +22,10 @@ body {
     align-items: center;
 }
 
-.plot.planted {
+.plot.plantedA {
     background-image: url('images/planted_plot.png');
+}
+
+.plot.plantedB {
+    background-image: url('images/growing_icon.png');
 }

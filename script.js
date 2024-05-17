@@ -1,22 +1,36 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     const farmContainer = document.getElementById('farm');
     const moneyDisplay = document.getElementById('money');
-    const seedsDisplay = document.getElementById('seeds');
-    const buySeedButton = document.getElementById('buySeedButton');
+    const seedsADisplay = document.getElementById('seedsA');
+    const seedsBDisplay = document.getElementById('seedsB');
+    const buySeedAButton = document.getElementById('buySeedAButton');
+    const buySeedBButton = document.getElementById('buySeedBButton');
     const buyPlotButton = document.getElementById('buyPlotButton');
 
     let money = 100;
-    let seeds = 10;
+    let seedsA = 10;
+    let seedsB = 5;
     let plotCount = 3;
 
-    buySeedButton.addEventListener('click', () => {
+    buySeedAButton.addEventListener('click', () => {
         if (money >= 5) {
             money -= 5;
-            seeds++;
+            seedsA++;
             moneyDisplay.textContent = money;
-            seedsDisplay.textContent = seeds;
+            seedsADisplay.textContent = seedsA;
         } else {
-            alert('No tienes suficiente dinero para comprar una semilla.');
+            alert('No tienes suficiente dinero para comprar una semilla A.');
+        }
+    });
+
+    buySeedBButton.addEventListener('click', () => {
+        if (money >= 10) {
+            money -= 10;
+            seedsB++;
+            moneyDisplay.textContent = money;
+            seedsBDisplay.textContent = seedsB;
+        } else {
+            alert('No tienes suficiente dinero para comprar una semilla B.');
         }
     });
 
@@ -39,19 +53,32 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     const handlePlotClick = (plot) => {
-        if (!plot.classList.contains('planted')) {
-            // Si la parcela no está plantada, mostrar mensaje para plantar
-            if (seeds > 0) {
-                const plantOption = confirm('¿Quieres plantar una semilla aquí?');
-                if (plantOption) {
-                    plot.classList.add('planted');
-                    seeds--;
-                    seedsDisplay.textContent = seeds;
+        if (!plot.classList.contains('plantedA') && !plot.classList.contains('plantedB')) {
+            // Si la parcela no está plantada, preguntar qué tipo de semilla plantar
+            if (seedsA > 0 || seedsB > 0) {
+                const plantOption = prompt('¿Quieres plantar una semilla aquí? Ingresa "A" para semilla A o "B" para semilla B.');
+                if (plantOption === 'A' && seedsA > 0) {
+                    plot.classList.add('plantedA');
+                    seedsA--;
+                    seedsADisplay.textContent = seedsA;
 
-                    // Simular crecimiento de la planta después de 5 segundos
+                    // Simular crecimiento de la planta A después de 5 segundos
                     setTimeout(() => {
                         plot.dataset.grown = 'true'; // Marcar la parcela como crecida
+                        plot.dataset.type = 'A';
                     }, 5000); // 5000 milisegundos = 5 segundos
+                } else if (plantOption === 'B' && seedsB > 0) {
+                    plot.classList.add('plantedB');
+                    seedsB--;
+                    seedsBDisplay.textContent = seedsB;
+
+                    // Simular crecimiento de la planta B después de 10 segundos
+                    setTimeout(() => {
+                        plot.dataset.grown = 'true'; // Marcar la parcela como crecida
+                        plot.dataset.type = 'B';
+                    }, 10000); // 10000 milisegundos = 10 segundos
+                } else {
+                    alert('No tienes suficientes semillas para plantar este tipo.');
                 }
             } else {
                 alert('No tienes suficientes semillas para plantar.');
@@ -61,9 +88,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
             if (plot.dataset.grown === 'true') {
                 const harvestOption = confirm('¿Quieres cosechar aquí?');
                 if (harvestOption) {
-                    plot.classList.remove('planted');
+                    const plantType = plot.dataset.type;
+                    if (plantType === 'A') {
+                        money += 10; // Ganas $10 por cada parcela cosechada de tipo A
+                    } else if (plantType === 'B') {
+                        money += 20; // Ganas $20 por cada parcela cosechada de tipo B
+                    }
+                    plot.classList.remove('plantedA', 'plantedB');
                     plot.dataset.grown = 'false'; // Reiniciar el estado de crecimiento
-                    money += 10; // Ganas $10 por cada parcela cosechada
+                    plot.dataset.type = ''; // Limpiar el tipo de planta
                     moneyDisplay.textContent = money;
                 }
             } else {
