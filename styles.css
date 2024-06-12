@@ -10,34 +10,47 @@ body {
     padding: 0;
 }
 
+
 .plot {
     width: 96px;
     height: 96px;
-    border: 2px solid #000;
     margin: 8px;
     background-image: url('images/plot.png');
     background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
 }
 
-.plot.plantedA {
+.plot.not {
+    width: 96px;
+    height: 96px;
+    margin: 8px;
+    background-image: url('images/not_plot.png');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.plot.planted {
     background-image: url('images/planted_plot.png');
 }
 
-.plot.plantedB {
-    background-image: url('images/growing_icon.png');
+.plot.grow {
+    background-image: url('images/planted_plot.png');
 }
 
-.timer {
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 2px 4px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: bold;
+#farm-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Espacio entre los cuadrados */
+    position: fixed;
+    bottom: 0;
+    left: 100px; /* Ajusta esto si quieres que esté centrado o a la derecha */
+    z-index: 110;
+}
+
+.hidden {
+    display: none;
 }
