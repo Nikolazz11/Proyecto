@@ -113,4 +113,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
             newMenu.classList.add('hidden');
         }
     });
+
+    const corralContainer = document.getElementById('corral-container');
+    const farmContainer = document.getElementById('farm-container');
+    const animalButton = document.getElementById('animalButton');
+
+    animalButton.addEventListener('click', () => {
+        // Oculta los plots con una animación
+        const plots = document.querySelectorAll('.plot');
+        plots.forEach(plot => {
+            plot.classList.add('slide-out');
+        });
+
+        // Después de la animación, oculta el farmContainer y muestra el corralContainer
+        setTimeout(() => {
+            farmContainer.classList.add('hidden');
+            corralContainer.classList.remove('hidden');
+        }, 500); // El tiempo debe coincidir con la duración de la animación
+    });
+
 });

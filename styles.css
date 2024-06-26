@@ -54,3 +54,24 @@ body {
 .hidden {
     display: none;
 }
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-10000%);
+    }
+}
+
+.plot.slide-out {
+    animation: slideOut 1s forwards;
+}
+
+.corral {
+    background-image: url('images/corral.PNG');
+    background-size: cover;
+    width: 65%;
+    height: 45%;
+}
+
